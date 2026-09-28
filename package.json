@@ -1,0 +1,44 @@
+{
+  "name": "protomux-request",
+  "version": "0.0.0",
+  "description": "Request/response pattern over Protomux channels",
+  "homepage": "https://github.com/holepunchto/protomux-request#readme",
+  "bugs": {
+    "url": "https://github.com/holepunchto/protomux-request/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/holepunchto/protomux-request.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Holepunch Inc",
+  "type": "commonjs",
+  "main": "index.js",
+  "exports": {
+    "./package": "./package.json",
+    ".": "./index.js",
+    "./errors": "./lib/errors.js"
+  },
+  "files": [
+    "index.js",
+    "lib/"
+  ],
+  "scripts": {
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
+    "test": "npm run lint && brittle test/*.test.js",
+    "test:bare": "brittle-bare test/*.test.js"
+  },
+  "devDependencies": {
+    "b4a": "^1.7.3",
+    "brittle": "^3.19.1",
+    "prettier": "^3.6.2",
+    "prettier-config-holepunch": "^2.0.0",
+    "protomux": "^3.10.1",
+    "streamx": "^2.28.1"
+  },
+  "dependencies": {
+    "compact-encoding": "^3.0.1",
+    "safety-catch": "^1.0.2"
+  }
+}
