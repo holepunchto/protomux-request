@@ -64,7 +64,10 @@ class ProtomuxRequest {
       requestMessage: this.channel.addMessage({
         encoding: frame,
         onmessage: (m) => {
-          this._onrequest(op, m).catch(safetyCatch)
+          this._onrequest(op, m).catch((err) => {
+            safetyCatch(err)
+            this.channel.close()
+          })
         }
       }),
       responseMessage: this.channel.addMessage({
@@ -196,14 +199,7 @@ class ProtomuxRequest {
   }
 
   _sendError(id, error) {
-    let buffer
-    try {
-      buffer = c.encode(this._errorEncoding, error)
-    } catch (err) {
-      // the protocol fails to encode error, silently let client times out
-      safetyCatch(err)
-      return
-    }
+    const buffer = c.encode(this._errorEncoding, error)
 
     this._errorMessage.send({ id, value: buffer })
   }

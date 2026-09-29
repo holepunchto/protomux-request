@@ -451,8 +451,9 @@ test('error decode error', async (t) => {
   }
 })
 
-test('error encode error cause client timeout', async (t) => {
-  const channel = Protomux.from(new PassThrough()).createChannel({
+test('error encode error closes the channel', async (t) => {
+  const stream = new PassThrough()
+  const channel = Protomux.from(stream).createChannel({
     protocol: 'protomux-request-test'
   })
   const requests = new ProtomuxRequest(channel, { timeout: 50 })
@@ -480,7 +481,8 @@ test('error encode error cause client timeout', async (t) => {
     t.is(e.code, 'REQUEST_TIMEOUT')
   }
 
-  t.is(channel.closed, false, 'do not close channel')
+  t.is(channel.closed, true, 'channel closed')
+  t.is(stream.destroyed, false, 'connection stays open')
 })
 
 test('multiple instances on same muxer', async (t) => {
