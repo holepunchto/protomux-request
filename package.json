@@ -21,9 +21,11 @@
   },
   "files": [
     "index.js",
-    "lib/"
+    "lib/",
+    "spec/"
   ],
   "scripts": {
+    "build": "node build.js",
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "test": "npm run lint && brittle test/*.test.js",
@@ -39,6 +41,7 @@
   },
   "dependencies": {
     "compact-encoding": "^3.0.1",
+    "hyperschema": "^1.26.2",
     "safety-catch": "^1.0.2"
   }
 }

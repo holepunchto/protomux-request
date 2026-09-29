@@ -1,6 +1,9 @@
 const c = require('compact-encoding')
 const safetyCatch = require('safety-catch')
 const ProtomuxRequestError = require('./lib/errors')
+const { getEncoding } = require('./spec/hyperschema')
+
+const frame = getEncoding('@protomux-request/frame')
 
 const DEFAULT_TIMEOUT = 30_000
 
@@ -203,23 +206,6 @@ class ProtomuxRequest {
     }
 
     this._errorMessage.send({ id, value: buffer })
-  }
-}
-
-const frame = {
-  preencode(state, m) {
-    c.uint.preencode(state, m.id)
-    c.raw.preencode(state, m.value)
-  },
-  encode(state, m) {
-    c.uint.encode(state, m.id)
-    c.raw.encode(state, m.value)
-  },
-  decode(state) {
-    return {
-      id: c.uint.decode(state),
-      value: c.raw.decode(state)
-    }
   }
 }
 
